@@ -1,20 +1,26 @@
-GET http://localhost:3000/products
+GET http://localhost:3001/products
 
 ###
 
-POST http://localhost:3000/products
+POST http://localhost:3001/products
 Content-Type: application/json
 
 {
-    "name": "MTB",
-    "price": 10000
-
+    "name": "uj",
+    "price": 1000
 }
 
 ###
 
-PUT http://localhost:3000/
+PUT http://localhost:3001/products/1
+Content-Type: application/json
+
+{
+    "id": 1,
+    "name": "NEW",
+    "price": 2000
+}
 
 ###
 
-DELETE http://localhost:3000/
+DELETE http://localhost:3001/products/2

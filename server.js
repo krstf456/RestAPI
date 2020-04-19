@@ -1,41 +1,65 @@
-const express = require('express')
-const app = express()
+const express = require('express');
+const app = express();
+const Joi = require('joi');
+
+app.use(express.json());
 
 const products = [
-     {
-        id: 1,
-        name: 'TV',
-        price: '4000'
-     }, {
-        id: 2,
-        name: 'laptop',
-        price: '5000'
-     }, {
-        id: 3,
-        name: 'iPad',
-        price: '3500'
-     }
-]
+     {id: 1, name: 'TV', price: 4000}, 
+     {id: 2, name: 'laptop', price: 3500},
+     {id: 3, name: 'iPad', price: 3300}
+];
 
-app.use(express.json())
-app.use(express.static('public'))
+
+app.get('/', (req, res) => {
+    res.send('REST-API')
+});
 
 app.get('/products', (req, res) => {
     res.json(products)
-})
+});
+app.post('/products', (req, res) => {
+    const validation = {
+        name: Joi.string().min(2).required(),
+        price: Joi.number().required(),
+        
+    };
+    const validationResult = Joi.validate(req.body, validation);
 
-
-
-app.post('/products', (res, req) => {
+    if(validationResult.error) {
+        res.status(400).send(validationResult.error.details[0].message)
+        return
+    };
     const product = {
-        id: req.body.length + 1,
+        id: products.length +1,
         name: req.body.name,
-        price: req.body.price
-    }
+        price: req.body.price,
+       
+    };
     products.push(product)
     res.json(product)
 })
 
-app.put()
+app.put('/products/:id', (req, res) => {
+    //Find the course with the given id
+    const product = products.find(p => p.id === parseInt(req.params.id))
 
-app.listen(3000, 'localhost', () => console.log('Server is running at port 3000.'))
+   
+
+    product.name = req.body.name
+    product.price = req.body.price
+    
+    res.json(product)
+})
+
+app.delete('/products/:id', (req, res) => {
+    //Find the course with given id
+    const product = products.find(p => p.id === parseInt(req.params.id))
+    // delete a course
+    const index = products.indexOf(product)
+    products.splice(index, 1)
+
+    res.json(product)
+})
+
+app.listen(3001, 'localhost', () => console.log('Server is running at port 3001.'))
