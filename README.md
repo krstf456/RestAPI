@@ -2,7 +2,7 @@
 Making a Rest API from scratch
 
 # Infromation
-This is a school projekt to build a Restful API with the help of express. We need to use 4 endpoints with every metod(GET, POST, PUT, DELETE). 
+This is a school project. The goal was to build a Restful API with the help of express. We needed to use 4 endpoints with every metod(GET, POST, PUT, DELETE). 
 
 # Requirements
 I only made the G requirements.
