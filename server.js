@@ -71,7 +71,7 @@ app.delete('/products/:id', (req, res) => {
     //Find the course with given id
     const product = products.find(p => p.id === parseInt(req.params.id))
     //Not existing 404
-    if(!product) return res.status(404).send('The product was not found.')
+    if(!product) return res.status(404).send('The product you looking for was not found.')
     
     // delete a course
     const index = products.indexOf(product)
