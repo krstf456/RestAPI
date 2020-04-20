@@ -44,7 +44,22 @@ app.put('/products/:id', (req, res) => {
     //Find the course with the given id
     const product = products.find(p => p.id === parseInt(req.params.id))
 
-   
+    //If not exist return 404
+    if(!product) return res.status(404).send('The product you looking for was not found.')
+        
+    
+    //validate
+    const validation = {
+        id: Joi.number().required(),
+        name: Joi.string().min(3).required(),
+        price: Joi.number().required(),
+    }
+    const validationResult = Joi.validate(req.body, validation)
+    //If invalid return 400 bad request
+    if(validationResult.error) {
+        res.status(400).send(validationResult.error.details[0].message)
+        return
+    }
 
     product.name = req.body.name
     product.price = req.body.price
@@ -55,6 +70,9 @@ app.put('/products/:id', (req, res) => {
 app.delete('/products/:id', (req, res) => {
     //Find the course with given id
     const product = products.find(p => p.id === parseInt(req.params.id))
+    //Not existing 404
+    if(!product) return res.status(404).send('The product was not found.')
+    
     // delete a course
     const index = products.indexOf(product)
     products.splice(index, 1)
