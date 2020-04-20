@@ -17,6 +17,7 @@ app.get('/', (req, res) => {
 
 app.get('/products', (req, res) => {
     res.json(products)
+    
 });
 app.post('/products', (req, res) => {
     const validation = {
@@ -38,6 +39,7 @@ app.post('/products', (req, res) => {
     };
     products.push(product)
     res.json(product)
+    res.status(201).send()
 })
 
 app.put('/products/:id', (req, res) => {
@@ -65,6 +67,7 @@ app.put('/products/:id', (req, res) => {
     product.price = req.body.price
     
     res.json(product)
+    res.status(201).send()
 })
 
 app.delete('/products/:id', (req, res) => {
@@ -78,6 +81,7 @@ app.delete('/products/:id', (req, res) => {
     products.splice(index, 1)
 
     res.json(product)
+    res.status(201).send()
 })
 
 app.listen(3001, 'localhost', () => console.log('Server is running at port 3001.'))
